@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import QrReader from "react-qr-reader";
 import { toast } from "react-toastify";
 
@@ -7,6 +7,25 @@ import styles from "./Attendance.module.css";
 import { markAttendance } from "../../Services/users.service";
 
 const Attendance = (props) => {
+  useEffect(() => {
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia(
+        {
+          video: true,
+        },
+        function (localMediaStream) {},
+        function (err) {
+          notify("Unable to access camera. Please try a different browser!");
+        }
+      );
+    } else {
+      notify(
+        "Sorry! This browser doesn't support camera access, please try a different browser!",
+        "error"
+      );
+    }
+  }, []);
+
   const handleScan = async (scannedData) => {
     try {
       if (!scannedData) return;
@@ -21,7 +40,7 @@ const Attendance = (props) => {
   };
 
   const handleError = () => {
-    notify("OOPS! Something went wrong!");
+    notify("OOPS! Something went wrong!", "error");
   };
 
   const notify = (message, type) =>
