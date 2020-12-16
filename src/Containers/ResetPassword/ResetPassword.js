@@ -5,7 +5,7 @@ import styles from "./ResetPassword.module.css";
 
 import { resetPassword } from "../../Services/users.service";
 
-const ResetPassword = () => {
+const ResetPassword = (props) => {
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [repeatPassword, setRepeatPassword] = useState();
@@ -44,6 +44,9 @@ const ResetPassword = () => {
 
   return (
     <div className={styles.screen}>
+      <h3 className={styles.home} onClick={() => props.setScreen(0)}>
+        {"< HOME"}
+      </h3>
       <input
         type="password"
         placeholder="Current Password"

@@ -39,8 +39,13 @@ const Login = (props) => {
       localStorage.setItem(
         "user",
         JSON.stringify({
-          name: userDetails.user.name,
           _id: userDetails.user._id,
+          name: userDetails.user.name,
+          rank: userDetails.rank,
+          score:
+            userDetails.user?.score?.technical +
+              userDetails.user?.score?.managerial +
+              userDetails.user?.score?.oratory || 0,
         })
       );
       props.setScreen(2);

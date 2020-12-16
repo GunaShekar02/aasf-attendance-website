@@ -6,7 +6,7 @@ import styles from "./Attendance.module.css";
 
 import { markAttendance } from "../../Services/users.service";
 
-const Attendance = () => {
+const Attendance = (props) => {
   const handleScan = async (scannedData) => {
     try {
       if (!scannedData) return;
@@ -37,6 +37,9 @@ const Attendance = () => {
 
   return (
     <div className={styles.screen}>
+      <h3 className={styles.home} onClick={() => props.setScreen(0)}>
+        {"< HOME"}
+      </h3>
       <QrReader
         delay={5 * 1000}
         onError={handleError}

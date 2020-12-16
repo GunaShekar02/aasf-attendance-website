@@ -25,7 +25,7 @@ const App = () => {
       case 1:
         return <Login setScreen={setScreen} />;
       case 2:
-        return <Home />;
+        return <Home setScreen={setScreen} />;
       default:
         return null;
     }
