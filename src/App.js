@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+import Login from "./Containers/Login/Login";
+import Home from "./Containers/Home/Home";
+
+import useMediaQuery from "./Utils/useMediaQuery";
+
+const App = () => {
+  const [screen, setScreen] = useState(0);
+
+  const isMobile = useMediaQuery("(max-width: 1025px)");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) setScreen(2);
+    else setScreen(1);
+  }, []);
+
+  const renderScreen = () => {
+    switch (screen) {
+      case 0:
+        return null;
+      case 1:
+        return <Login setScreen={setScreen} />;
+      case 2:
+        return <Home />;
+      default:
+        return null;
+    }
+  };
+
+  return isMobile ? (
+    <>
+      <ToastContainer />
+      {renderScreen()}
+    </>
+  ) : (
+    <div>Please use this app only on your mobile!</div>
   );
-}
+};
 
 export default App;
