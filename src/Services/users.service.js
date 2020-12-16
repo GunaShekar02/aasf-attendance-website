@@ -1,6 +1,10 @@
 import axios from "axios";
 
-import { USER_DETAILS_URL, ATTENDANCE_URL } from "../Utils/constants";
+import {
+  USER_DETAILS_URL,
+  ATTENDANCE_URL,
+  PASSWORD_URL,
+} from "../Utils/constants";
 
 export const getUserDetails = async (token) => {
   try {
@@ -17,9 +21,26 @@ export const getUserDetails = async (token) => {
 export const markAttendance = async (hash) => {
   try {
     const token = localStorage.getItem("token");
+
     const { data } = await axios.post(
       ATTENDANCE_URL,
       { hash },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    return data;
+  } catch (err) {
+    throw err.response.data;
+  }
+};
+
+export const resetPassword = async (currentPassword, newPassword) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const { data } = await axios.put(
+      PASSWORD_URL,
+      { currentPassword, newPassword },
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
